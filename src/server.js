@@ -1,14 +1,32 @@
-const express = require("express");
+const server = require("http").createServer();
+const port = 8500;
 const io = require("socket.io")(server);
 
+const ClientManager = require("./ClientManager");
+const ChatroomManager = require("./ChatroomManager");
+const makeHandlers = require("./handlers");
+
+const clientManager = ClientManager();
+const chatroomManager = ChatroomManager();
+
 io.on("connection", function(client) {
+  const {
+    handleRegister,
+    handleJoin,
+    handleLeave,
+    handleMessage,
+    handleGetChatrooms,
+    handleGetAvailableUsers,
+    handleDisconnect
+  } = makeHandlers(client, clientManager, chatroomManager);
+
   client.on("register", handleRegister);
 
   client.on("join", handleJoin);
 
   client.on("leave", handleLeave);
 
-  client.on("message", handleMessage);
+  client.on('message', handleMessage)
 
   client.on("chatrooms", handleGetChatrooms);
 
@@ -24,9 +42,6 @@ io.on("connection", function(client) {
     console.log(err);
   });
 });
-
-const server = express();
-const port = 3000;
 
 server.listen(port, function(err) {
   if (err) throw err;
