@@ -80,7 +80,7 @@ module.exports = function(client, clientManager, chatroomManager) {
   function handleMessage({ chatroomName, message } = {}, callback) {
     const createEntry = () => ({ message });
 
-    client.emit("message", { chatroomName, message });
+    client.broadcast.emit("message", { chatroomName, message });
 
     handleEvent(chatroomName, createEntry)
       .then(() => callback(null))
