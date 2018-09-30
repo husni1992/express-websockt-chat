@@ -1,0 +1,30 @@
+{
+  "name": "express-websockt-chat",
+  "version": "1.0.0",
+  "description": "Simple chat server using socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/husni1992/express-websockt-chat.git"
+  },
+  "keywords": [
+    "express",
+    "chat",
+    "websockets",
+    "socket.io"
+  ],
+  "author": "M.G.Husny Ahamed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/husni1992/express-websockt-chat/issues"
+  },
+  "homepage": "https://github.com/husni1992/express-websockt-chat#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
