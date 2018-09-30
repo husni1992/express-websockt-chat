@@ -1,40 +1,16 @@
-const server = require("http").createServer();
-const port = 8500;
+const server = require("http").createServer(function(req, res) {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.write("Hello World!");
+  res.end();
+});
+
+const port = process.env.PORT || 8500;
 const io = require("socket.io")(server);
 
-const ClientManager = require("./ClientManager");
-const ChatroomManager = require("./ChatroomManager");
-const makeHandlers = require("./handlers");
-
-const clientManager = ClientManager();
-const chatroomManager = ChatroomManager();
-
 io.on("connection", function(client) {
-  const {
-    handleRegister,
-    handleJoin,
-    handleLeave,
-    handleMessage,
-    handleGetChatrooms,
-    handleGetAvailableUsers,
-    handleDisconnect
-  } = makeHandlers(client, clientManager, chatroomManager);
-
-  client.on("register", handleRegister);
-
-  client.on("join", handleJoin);
-
-  client.on("leave", handleLeave);
-
-  client.on('message', handleMessage)
-
-  client.on("chatrooms", handleGetChatrooms);
-
-  client.on("availableUsers", handleGetAvailableUsers);
-
-  client.on("disconnect", function() {
-    console.log("client disconnect...", client.id);
-    handleDisconnect();
+  client.on("message", function({ chatroomName, message } = {}, callback) {
+    console.log({ chatroomName, message });
+    client.broadcast.emit("message", { chatroomName, message });
   });
 
   client.on("error", function(err) {

@@ -25,5 +25,8 @@
   "homepage": "https://github.com/husni1992/express-websockt-chat#readme",
   "dependencies": {
     "socket.io": "^2.1.1"
+  },
+  "engines": {
+    "node": "8.11.2"
   }
 }
