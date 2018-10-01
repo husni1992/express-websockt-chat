@@ -13,6 +13,11 @@ io.on("connection", function(client) {
     client.broadcast.emit("message", { chatroomName, message });
   });
 
+  client.on("delete_message", function({ messageId } = {}, callback) {
+    console.log("delete_message", { messageId });
+    client.broadcast.emit("delete_message", { messageId });
+  });
+
   client.on("error", function(err) {
     console.log("received error from client:", client.id);
     console.log(err);
